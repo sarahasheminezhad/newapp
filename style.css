@@ -1,0 +1,115 @@
+
+body {
+    font-family: "Playpen Sans Arabic", cursive;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+h1 {
+    color: #007bff;
+}
+
+ul.step>li, ul.step>li>div  {
+    display: inline;
+}
+
+ul.step>li>div {
+    padding: 20px;
+    background-color: #007bff7b;
+    border-radius: 10px;
+    margin: 10px;
+    text-align: center;
+}
+.stepIcon {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #e0e0e0; /* خاکستری پیش‌فرض */
+    display: inline-block;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+
+.stepIcon.active {
+    background-color: #0d6efd !important; /* آبی */
+    color: white !important;
+    font-weight: bold;
+}
+
+
+table {
+    width: 100%;
+    text-align: center;
+}
+
+tr {
+    border-bottom: 1px solid #e3e3e3;
+    height: 50px;
+}
+
+.no_loan {
+    border: #ff0000bd solid 3px;
+    color: red;
+}
+
+.loan_dis {padding: 20px;border-radius: 10px;margin: 50px 0;}
+
+.half_loan {
+    border: orange solid 3px;
+    color: orange;
+}
+
+.one_loan {
+    border: green solid 3px;
+    color: green;
+}
+
+.container.steps.text-center.p-3.border.rounded-4 {
+    padding: 0 !important;
+    height: 100px;
+    border-radius: 10px;
+}
+
+ul.step.list-inline {/* display: block !important; *//* height: 40px; *//* margin: 0; */padding: 35px 0;}
+
+.container.header.my-4.p-3.border.rounded-4 {
+    border-radius: 10px;
+}
+
+form.container.step_two.border.rounded-4.p-3.mt-4 {
+    border-radius: 10px;
+}
+
+.why-block {
+    background: blanchedalmond;
+    margin: 30px 0;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid orange;
+}
+
+.why-block p {
+    font-weight: 700;
+}
+
+.pre span, .rec span, .total span {
+    display: block;
+}
+
+.pre, .rec {
+    background-color: lightsteelblue;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid cornflowerblue;
+    line-height: 30px;
+}
+
+.total {
+    background: #8fbc8f9e;
+    border: 1px solid green;
+    border-radius: 10px;
+    padding: 30px;
+    line-height: 30px;
+}
+.calculate {
+    text-align: center;
+}

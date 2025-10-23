@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <title>My Flask App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans+Arabic:wght@100..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container header my-4 p-3 border rounded-4">
+        <h1 class="text-center fw-bold appInfo" style="font-weight:800; text-align: center;">سیستم تصمیم گیری تامین مالی</h1>
+        <p class="more" style="text-align: center;">اطلاعات مورد نیاز در هر مرحله را به دقت وارد کنید تا تحلیل و تصمیم گیری به درستی انجام شود.</p>
+    </div>
+
+    <!-- steps -->
+    <div class="container steps text-center p-3 border rounded-4">
+        <ul class="step list-inline">
+            <li class="list-inline-item">
+                <div class="stepIcon {% if step == 1 %}active{% endif %}">اپلیکیشن</div>
+            </li>
+            <li class="list-inline-item">
+                <div class="stepIcon {% if step == 2 %}active{% endif %}">اطلاعات</div>
+            </li>
+            <li class="list-inline-item">
+                <div class="stepIcon {% if step == 3 %}active{% endif %}">روش</div>
+            </li>
+            <li class="list-inline-item">
+                <div class="stepIcon {% if step == 4 %}active{% endif %}">نتیجه</div>
+            </li>
+        </ul>
+    </div>
+
+    {% if step == 1 %}
+    <form action="{{ url_for('step_one') }}" method="POST" class="container step_one border rounded-4 p-3 mt-4">
+        <h2>مرحله اول: درباره اپلیکیشن</h2>
+        <div class="manInfo" style="border: 1px solid rgb(191 219 254); background-color: rgb(239 246 255); border-radius: 10px; padding: 10px;">
+            <h6 class="about">
+                اطلاعات تولید کننده
+            </h6>
+            <label>نام شرکت:
+                <input name="company_name" type="text" class="form-control" required>
+            </label>
+            <ul class="loanType" style="margin-top: 15px;">
+                <li><span style="font-weight: 600;">وام پیش پرداخت(Prepayment Loan)'L':</span> برای خرید موجودی برای فروش آفلاین </li>
+                <li><span style="font-weight: 600;">وام دریافتنی(Receivables Loan)'A': </span>برای تأمین مالی عملیات بازیافت</li>
+            </ul>
+        </div>
+        <ul class="forandrev" style="list-style: none; padding: 0;">
+            <li style="display: inline-block;width: 49%;">
+                <div class="forSup" style="border: 1px solid rgb(187 247 208); background-color: rgb(240 253 244); border-radius: 10px; padding: 10px; margin: 20px 0;">
+                    <h6 class="about">
+                        زنجیره تامین رو به جلو
+                    </h6>
+                    <span>
+                        تأمین مالی برای خرید کالا از تولیدکننده و فروش از طریق کانال آفلاین
+                    </span>
+                </div>
+            </li>
+            <li style="display: inline-block; width: 50%;">
+                <div class="forSup" style="width: 100%; border: 1px solid rgb(233 213 255); background-color: rgb(250 245 255); border-radius: 10px; padding: 10px; margin: 20px 0;">
+                    <h6 class="about">
+                        زنجیره تامین معکوس
+                    </h6>
+                    <span>
+                        تأمین مالی برای عملیات بازیافت و فعالیت‌های اقتصاد چرخشی
+                    </span>
+                </div>
+            </li>
+        </ul>
+        <button type="submit" class="btn btn-primary w-100 mt-3">مرحله بعد</button>
+    </form>
+    {% endif %}
+
+    {% if step == 2 %}
+    <form action="{{ url_for('step_two') }}" method="POST" class="container step_two border rounded-4 p-3 mt-4">
+        <h2 class="stepInfo">مرحله دوم: وارد کردن اطلاعات</h2>
+
+        <!-- زنجیره رو به جلو -->
+        <div class="forward w-50 mt-3" style="display: inline-block; width: 49% !important;">
+            <h6 class="about">زنجیره تامین رو به جلو</h6>
+            <label style="display: block; margin: 20px 0;">قیمت فروش عمده (w)
+                <input name="w" id="w" type="number" step="any" class="form-control" required>
+            </label>
+            <label style="display: block; margin: 20px 0;">تعداد فروش آفلاین (Q_r)
+                <input name="Qr" id="Qr" type="number" step="any" class="form-control" required>
+            </label>
+        </div>
+
+        <!-- زنجیره معکوس -->
+        <div class="inverse w-50 mt-3" style="display: inline-block; width: 49% !important;">
+            <h6 class="about">زنجیره تامین معکوس</h6>
+            <label style="display: block; margin: 20px 0;">قیمت انتقال بازیافت (R_p)
+                <input name="Rp" id="Rp" type="number" step="any" class="form-control" required>
+            </label>
+            <label style="display: block; margin: 20px 0;">تعداد محصولات بازیافتی
+                <input name="recycled" id="recycled" type="number" step="any" class="form-control" required>
+            </label>
+        </div>
+
+        <!-- پایداری -->
+        <div class="sustain w-100 mt-3" style="display: block;">
+            <h6 class="about">امتیاز پایداری(e)</h6>
+            <label style="display: block; margin: 20px 0;">از 1 تا 10 امتیاز دهید
+                <input name="sustain" id="sustain" type="number" step="any" class="form-control" required>
+            </label>
+        </div>
+
+
+        <!-- نتایج -->
+        <div class="Prepayment w-50 mt-3" style="display: inline-block; width: 49% !important;">
+            <h6 class="about">وام پیش پرداخت</h6>
+            <p class="amount" id="prepaymentAmount" style="font-weight:bold; font-size:18px; color:blue;">
+                {% if prepayment is defined and prepayment %}
+                    {{ prepayment }}
+                {% else %}
+                    0
+                {% endif %}
+                $
+            </p>
+        </div>
+
+        <div class="Receivables w-50 mt-3" style="display: inline-block; width: 49% !important;">
+            <h6 class="about">وام دریافتنی</h6>
+            <p class="amount" id="receivablesAmount" style="font-weight:bold; font-size:18px; color:blue;">
+                {% if receivables is defined and receivables %}
+                    {{ receivables }}
+                {% else %}
+                    0
+                {% endif %}
+                $
+            </p>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+        <a href="{{ url_for('step_one') }}" class="btn btn-secondary w-25">→ مرحله قبل</a>
+        <button type="submit" class="btn btn-primary w-25">مرحله بعد ←</button>
+    </div>
+    </form>
+
+    <!-- 🔹 اسکریپت برای محاسبه زنده -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const wInput = document.getElementById("w");
+        const QrInput = document.getElementById("Qr");
+        const prepaymentDisplay = document.getElementById("prepaymentAmount");
+
+        function updatePrepayment() {
+            const w = parseFloat(wInput.value) || 0;
+            const Qr = parseFloat(QrInput.value) || 0;
+            const prepayment = w * Qr;
+            prepaymentDisplay.textContent = prepayment.toLocaleString('fa-IR');
+        }
+
+        wInput.addEventListener("input", updatePrepayment);
+        QrInput.addEventListener("input", updatePrepayment);
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const RpInput = document.getElementById("Rp");
+        const recycledInput = document.getElementById("recycled");
+        const receivablesDisplay = document.getElementById("receivablesAmount");
+
+        function updateReceivables() {
+            const Rp = parseFloat(RpInput.value) || 0;
+            const recycled = parseFloat(recycledInput.value) || 0;
+            const receivables = Rp * recycled;
+            receivablesDisplay.textContent = receivables.toLocaleString('fa-IR');
+        }
+
+        RpInput.addEventListener("input", updateReceivables);
+        recycledInput.addEventListener("input", updateReceivables);
+    });
+    </script>
+    {% endif %}
+
+    {% if step == 3 %}
+    <form action="{{ url_for('step_three') }}" method="POST" class="container step_three border rounded-4 p-3 mt-4">
+        <h4>مرحله سوم: انتخاب روش</h4>
+
+        <div class="method d-flex justify-content-between mt-3">
+            <!-- 🔹 روش سنتی -->
+            <label class="tradition border rounded-3 p-3 w-50 me-2" style="cursor:pointer;">
+                <input type="radio" name="method_choice" value="traditional" required style="margin-left:10px;">
+                <h6>روش سنتی</h6>
+                <ul class="trad">
+                    <li>هزینه ارزیابی: <span>$10.000</span></li>
+                    <li>نرخ تایید (α_t): <span>55%</span></li>
+                    <li>نرخ بهره (i_t): <span>15%</span></li>
+                    <li>زمان پردازش: <span>روز 18</span></li>
+                </ul>
+                <p class="info">
+                    <strong>فرایند دستی:</strong>
+                    اسناد کاغذی، هزینه‌های بالا، دید محدود
+                </p>
+            </label>
+
+            <!-- 🔹 روش بلاکچین -->
+            <label class="blockchain border rounded-3 p-3 w-50 ms-2" style="cursor:pointer;">
+                <input type="radio" name="method_choice" value="blockchain" required style="margin-left:10px;">
+                <h6>روش مبتنی بر بلاکچین</h6>
+                <ul class="trad">
+                    <li>هزینه ارزیابی: <span>$15.000</span></li>
+                    <li>نرخ تایید (α_t): <span>88%</span></li>
+                    <li>نرخ بهره (i_t): <span>10%</span></li>
+                    <li>زمان پردازش: <span>روز 3</span></li>
+                </ul>
+                <p class="info">
+                    <strong>فرایند اتوماتیک:</strong>
+                    داده‌های شفاف، پایداری تأیید شده، نظارت در لحظه
+                </p>
+            </label>
+        </div>
+
+        <div class="why-block">
+            <p>
+                چرا بلاکچین بهتر است؟
+            </p>
+            <ul class="reason">
+                <li>سوابق تراکنش‌های تغییرناپذیر، اعتماد را افزایش می‌دهند</li>
+                <li>مشاهده‌پذیری زنجیره تأمین در لحظه، ریسک را کاهش می‌دهد</li>
+                <li>معیارهای پایداری تأیید شده ارزش بازار را افزایش می‌دهند</li>
+                <li>قراردادهای هوشمند، انطباق و پرداخت‌ها را خودکار می‌کنند</li>
+                <li>ریسک کمتر = نرخ بهره کمتر برای وام گیرندگان</li>
+            </ul>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+        <a href="{{ url_for('step_two') }}" class="btn btn-secondary w-25">→ مرحله قبل</a>
+        <button type="submit" class="btn btn-primary w-25">مرحله بعد ←</button>
+    </div>
+    </form>
+
+    <!-- 🔸 کمی استایل برای انتخاب -->
+    <style>
+    .method label:hover {
+        background-color: #eef6ff;
+    }
+    input[type="radio"]:checked + h6,
+    input[type="radio"]:checked ~ .info {
+        color: #0d6efd;
+        font-weight: bold;
+    }
+    input[type="radio"] {
+        display: none;
+    }
+    .method label:visited{
+        background-color: orange;
+    }
+    </style>
+    {% endif %}
+
+
+    {% if step == 4 %}
+    <div class="container step_four border rounded-4 p-3 mt-4">
+    <div class="calculate">
+        <h5>نتایج محاسبه وام</h5>
+
+        <div class="pre" style="display: inline-block;">
+            وام پیش پرداخت (L):
+            <span class="result-pre" style="font-weight:bold; color:blue;">
+                {{ prepayment | int | tojson }}
+            $</span>
+        </div>
+
+        <div class="rec" style="display: inline-block; margin-right:30px;">
+            وام دریافتنی (A):
+            <span class="result-rec" style="font-weight:bold; color:blue;">
+                {{ receivables | int | tojson }}
+            $</span>
+        </div>
+
+        <div class="total" style="display: inline-block; margin-right:30px;">
+            مبلغ کل تامین مالی:
+            <span class="result-total" style="font-weight:bold; color:green;">
+                {{ total | int | tojson }}
+            $</span>
+        </div>
+    </div>
+
+    <div class="compare">
+        <h5>
+            مقایسه روشها : سنتی و بلاکچین
+        </h5>
+        <table>
+            <tr>
+                <th>
+                    معیار
+                </th>
+                <th>سنتی</th>
+                <th>بلاکچین</th>
+            </tr>
+            <tr>
+                <th>امتیاز اعتباری</th>
+                <td>580</td>
+                <td>820</td>
+            </tr>
+            <tr>
+                <th>احتمال تصویب (α)</th>
+                <td>55%</td>
+                <td>88%</td>
+            </tr>
+            <tr>
+                <th>نرخ بهره (i)	</th>
+                <td>15%</td>
+                <td>8%</td>
+            </tr>
+            <tr>
+                <th>زمان پردازش</th>
+                <td>18 روز</td>
+                <td>3 روز</td>
+            </tr>
+            <tr>
+                <th>هزینه ارزیابی</th>
+                <td>10.000$</td>
+                <td>1.500$</td>
+            </tr>
+            <tr style="background-color: #0d6dfd50;">
+                <th>سود بانکی (π_B)</th>
+                <td class="pbank_trad">
+                    {{ "%.2f"|format(pbank_trad) }} $
+                </td>
+                <td class="pbank_block">
+                    {{ "%.2f"|format(pbank_block) }} $
+                </td>
+            </tr>
+
+        </table>
+
+    
+        {% if loan_status == 'approve' %}
+    <div class="loan_dis one_loan">
+        <h5>تصمیم گیری نهایی وام</h5>
+            <div class="approve">
+                وام مورد تایید است.
+                <div class="app_amount">مبلغ وام: {{ total | int }} $</div>
+                <div class="interest">نرخ بهره: 15%</div>
+                <div class="monthly">قسط ماهانه: {{ (total*0.15/12) | round(2) }} $</div>
+            </div>
+    </div>
+    
+        {% elif loan_status == 'half_approve' %}
+    <div class="loan_dis half_loan">
+        <h5>تصمیم گیری نهایی وام</h5>
+            <div class="half_approve">
+                وام در دست بررسی است.
+                <ul class="half">
+                    <li>انتظار می‌رود ظرف ۱۸ روز کاری تصمیم گرفته شود</li>
+                    <li>احتمال تأیید: ۵۵.۰٪</li>
+                    <li>در صورت تأیید، نرخ بهره: ۱۵.۵٪</li>
+                </ul>
+                <span><strong>توصیه: </strong>برای تأیید سریع‌تر، نرخ‌های پایین‌تر و شرایط بهتر، به ارزیابی مبتنی بر بلاکچین روی بیاورید.</span>
+            </div>
+    </div>
+    
+        {% else %}
+    <div class="loan_dis no_loan">
+        <h5>تصمیم گیری نهایی وام</h5>
+            <div class="not_approved">
+                وام شما تایید نشد.
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{{ url_for('step_three') }}" class="btn btn-secondary w-25">→ مرحله قبل</a>
+        <button onclick="window.print()" class="btn btn-success w-25">📄 پایان و چاپ نتیجه</button>
+    </div>
+
+    </div>
+
+    {% endif %}
+
+
+</body>
+</html>
+
+
